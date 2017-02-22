@@ -1,0 +1,50 @@
+1. What were your considerations when creating this test data?
+While making my data, I wanted the data to mimic the real data as much as possible. 
+I wanted there to be enough common users so that the similarity function worked for all of the movies when I used my test 
+file. I also wanted there to be potential outputs where the user threshold would not be met. I also wanted the test data to 
+have a recognizable pattern so that when I tested the file, I could easily see if my output was correct. I also made sure 
+there were no duplicates of pairing of movie and user ID, because each user could only have one movie rated once. 
+
+2. Were there certain characteristics of the real data and ﬁle format that you made sure to capture in your test data?
+The test data had to have the same data types as the actual file. Thus, Movie IDs and User IDs had to both be ints. 
+The rating for all the users had to range from 1-5. I also made sure the last column was 0s to avoid potential complications 
+in my program (as we didn’t need that last column anyways). I made sure that the test data had the same file format as the 
+real data file. For instance, all the lines in the test data had to end with ‘\n’. All lines had four columns and each column 
+was separated by a tab (‘\t’). 
+
+3. Did you create a reference solution for your test data? If so, how?
+While making the data, I made sure one of the movies had no recommendations under the default threshold, and I made the other 
+two movies have similar ratings and thus, have viable recommendations. This helped me get an idea of what the solution should 
+look like. 
+
+
+python similarity.py ml-100k/u.data similarities.txt
+Input MovieLens file: ml-100k/u.data
+Output file for similarity data: similarities.txt
+Minimum number of common users: 5
+Read 100000 lines with total of 1682 movies and 943 users
+similarity.py:36: RuntimeWarning: invalid value encountered in double_scalars
+  cossim = summation_xy / math.sqrt(summation_x * summation_y
+
+Unfortunately, I could not figure out how to get my program to run properly and output a sufficient similarity file. However, if it did work, it would look something like this:
+
+1 (MOVIE NUMBER, RECOMMENDATION, NUMBER OF COMMON USERS)
+2 (4323,0.84,6)
+3 (1081,0.99,5)
+4 (1116,0.87,7)
+5 (1050,1.00,5)
+6 (1057,1.00,7)
+7 (96,0.97,7)
+8 (161,0.86,5)
+9 (1153,1.00,9)
+10 (443,1.78,8)
+
+Brieﬂy explain in no more than one paragraph the decomposition of your program
+in terms of functions.
+
+The cosineSim() function is used to calculate the Pearson coefficient for two lists of numbers, and then output the two 
+movies’ similarity. To make this function, I created variables for all the components of the actual Pearson coefficient, 
+such as the average of all the ratings, the summations of all the ratings, and their differences (rating - rating average). 
+The commonUsers() function took two dictionaries and found their keys. The other function I made (getitem()) retrieves a 
+specific item from a list of items. This comes in handy when getting the recommendation, as it gets the first (thus, most 
+similar/ highly recommended item) in a list of movieIDs. 

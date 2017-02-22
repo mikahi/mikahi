@@ -1,0 +1,195 @@
+=== cme211-mikahi
+(   ) Autograder created this report at: Sun Oct 16 19:27:34 2016
+(   ) You initially have 100 points; autograder will deduct points below; total at bottom.
+(   ) Expecting no other files except for: ['README*', 'reference0.txt', 'reads0.txt', 'alignments0*', 'generatedata.py', 'processdata.py', 'AUTOGRADE.json', 'AUTOGRADE.txt']
+(   ) Unexpected file: " alignments0_ref.txt" (33bytes)
+(   ) Expecting no other directories besides: []
+=================================================================
+ Checking if imports ordering within generatedata.py. 
+=================================================================
+(   ) Checking import-ordering within header of file generatedata.py
+(   ) Great, all imports in order!
+=================================================================
+ Checking if any line of code too long. 
+=================================================================
+(   ) Checking import-ordering within header of file processdata.py
+(   ) Great, all imports in order!
+=================================================================
+ Try running with insufficient arguments. =
+=================================================================
+(   ) Restoring working directory to its original state (i.e., as the student submitted it.)
+(   ) Process manager: Thread started: ['python3', 'generatedata.py']
+(   ) Process manager: Limits are time=5sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.02sec with return code 0
+(   ) Program output: stdout:
+Usage:
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Process manager: Thread started: ['python3', 'processdata.py']
+(   ) Process manager: Limits are time=5sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.02sec with return code 0
+(   ) Program output: stdout:
+Usage:
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+=================================================================
+ Checking part (1): reference data. =
+=================================================================
+(   ) Restoring working directory to its original state (i.e., as the student submitted it.)
+(   ) Checking that reference0.txt contains 10 characters.
+(   ) Checking for 5 reads of length 3 in reads0.txt
+(   ) Checking that one read is not aligned to reference......three are aligned one time, and one is aligned twice.
+=================================================================
+ Checking part (2): simulating (small) data. =
+=================================================================
+(   ) Process manager: Thread started: ['python3', 'generatedata.py', '1000', '600', '50', 'reference_test1.txt', 'reads_test1.txt']
+(   ) Process manager: Limits are time=1sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.03sec with return code 0
+(   ) Program output: stdout:
+reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Checking that 'reference length *[:=] *1000' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'reference length *[:=] *1000'
+(   ) Checking that 'number (of )?reads *[:=] *600' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'number (of )?reads *[:=] *600'
+(   ) Checking that 'read length *[:=] *50' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'read length *[:=] *50'
+(   ) Checking that 'all?igns? *0' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'all?igns? *0'
+(   ) Checking that 'all?igns *1' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'all?igns *1'
+(   ) Checking that 'all?igns *2' is somewhere in 'reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.125
+aligns 1: 0.775
+aligns 2: 0.1'.
+(   ) Output correctly contained 'all?igns *2'
+=================================================================
+ Checking part (3): processing (small) data. =
+=================================================================
+(   ) Process manager: Thread started: ['python3', 'processdata.py', 'reference_test1.txt', 'reads_test1.txt', 'alignments1.txt']
+(   ) Process manager: Limits are time=1sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.06sec with return code 0
+(   ) Program output: stdout:
+reference length: 1000
+number reads: 600
+aligns 0: 0.125
+aligns 1: 0.7733333333333333
+aligns 2: 0.10166666666666667
+elapsed time: 0.010083913803100586
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+=================================================================
+ Checking part (2): Medium data. =
+=================================================================
+(   ) Process manager: Thread started: ['python3', 'generatedata.py', '10000', '6000', '50', 'reference_test2.txt', 'reads_test2.txt']
+(   ) Process manager: Limits are time=90sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.46sec with return code 0
+(   ) Program output: stdout:
+reference length: 10000
+number reads: 6000
+read length: 50
+aligns 0: 0.156
+aligns 1: 0.748
+aligns 2: 0.096
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Process manager: Thread started: ['python3', 'processdata.py', 'reference_test2.txt', 'reads_test2.txt', 'alignments2.txt']
+(   ) Process manager: Limits are time=90sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 0.62sec with return code 0
+(   ) Program output: stdout:
+reference length: 10000
+number reads: 6000
+aligns 0: 0.156
+aligns 1: 0.7478333333333333
+aligns 2: 0.09616666666666666
+elapsed time: 0.5706954002380371
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Checking that 'reference length *[:=] *10000' is somewhere in 'reference length: 10000
+number reads: 6000
+aligns 0: 0.156
+aligns 1: 0.7478333333333333
+aligns 2: 0.09616666666666666
+elapsed time: 0.5706954002380371'.
+(   ) Output correctly contained 'reference length *[:=] *10000'
+(   ) Checking that 'number (of )?reads *[:=] *6000' is somewhere in 'reference length: 10000
+number reads: 6000
+aligns 0: 0.156
+aligns 1: 0.7478333333333333
+aligns 2: 0.09616666666666666
+elapsed time: 0.5706954002380371'.
+(   ) Output correctly contained 'number (of )?reads *[:=] *6000'
+=================================================================
+ Generating data for the largest test set 
+=================================================================
+(   ) Process manager: Thread started: ['python3', 'generatedata.py', '100000', '60000', '50', 'reference_test3.txt', 'reads_test3.txt']
+(   ) Process manager: Limits are time=50sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 5.81sec with return code 0
+(   ) Program output: stdout:
+reference length: 100000
+number reads: 60000
+read length: 50
+aligns 0: 0.15063333333333334
+aligns 1: 0.7509666666666667
+aligns 2: 0.0984
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Great job! Your generatedata.py script ran in a reasonable amount of time on the largest dataset.
+=================================================================
+ Checking generated data reasonable 
+=================================================================
+=================================================================
+ Processing data for the largest test set 
+=================================================================
+(   ) Process manager: Thread started: ['python3', 'processdata.py', 'reference_test3.txt', 'reads_test3.txt', 'alignments3.txt']
+(   ) Process manager: Limits are time=875sec memory=8GiB fsize=50GiB 
+(   ) Process manager: Process exited after 29.54sec with return code 0
+(   ) Program output: stdout:
+reference length: 100000
+number reads: 60000
+aligns 0: 0.15063333333333334
+aligns 1: 0.7509666666666667
+aligns 2: 0.0984
+elapsed time: 29.51262879371643
+(   ) Program output: No stderr output.
+(   ) Exit status: Program exited as expected (with exit code 0)
+(   ) Great job! Your processdata.py script ran in a reasonable time on the large data-set.
+=================================================================
+ Checking integrity of alignment output. 
+=================================================================
+( -2) expected 60000 reads in the alignments file for data-set 3 (we even forgive an off-by-several error)
+TOTAL: 98
+IMPORTANT: If this report is sent prior to the assignment deadline, remember that the autograder tests and scoring may change significantly. If this report is sent after the assignment deadline, remember that the instructor or TA will use this report to assist with grading---and your actual grade may differ from what this report says. If you have any information that the instructor or TA should know about when grading your submission, please leave a comment on your submission in Canvas.

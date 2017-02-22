@@ -1,0 +1,180 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+% This is a simple template for a LaTeX document using the "article" class.
+% See "book", "report", "letter" for other types of document.
+
+\documentclass[12pt]{article} % use larger type; default would be 10pt
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+
+%%% Examples of Article customizations
+% These packages are optional, depending whether you want the features they provide.
+% See the LaTeX Companion or other references for full information.
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry} % to change the page dimensions
+\geometry{letterpaper} % or letterpaper (US) or a5paper or....
+% \geometry{margin=2in} % for example, change the margins to 2 inches all round
+% \geometry{landscape} % set up the page for landscape
+%   read geometry.pdf for detailed page layout information
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+
+\usepackage{amssymb}
+
+\usepackage{algorithm2e}
+%%% END Article customizations
+
+%%% The "real" document content comes below...
+
+\usepackage{graphicx}
+
+\title{CME 211 Final Project Writeup}
+\author{Mika Limcaoco}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+
+\noindent
+\textbf{\Large{Summary of Overall Project\\}}
+
+The goal of the overall project was to use a CG Solver algorithm to solve a steady-state heat equation. To do this, I was required to consider a system wherein hot fluid (with temperature $T_{h}$) would be transferred within a pipe. The pipe's exterior is kept cool and has a constant temperature of $T_{c}$, which is maintained by a series of cold air jets equally distributed throughout the pipe exterior. This project aims to solve for the mean temperature within the pipe walls. To do this, I analyzed one periodic section of the pipe wall. 
+
+A Conjugate Gradient method is used to solve the equation $Ax = b$ through multiple iterations. This is because the matrix $A$ is symmetric positive definite and sparse. 
+
+\bigskip
+\noindent
+\textbf{\Large{Description of the CG solver implementation\\}}
+\bigskip
+
+The CG Solver Algorithm is implemented through 3 main programs: main.cpp, CGSolver.cpp, and matvecops.cpp. The main file runs the CGSolver and the COO2CSR.cpp file (this translates a matrix read from COO to CSR to be better used by CGSolver). It does this by getting an input matrix in COO format and translating it to CSR, then applying the CGSolver on it to solve for the matrix equation AX=B (x being the unknown). Matvecops has all the functions referenced in CGSolver. Once the X is solved for, it is written to a file (which is named after the second user-typed input) that serves as the solution. The number of iterations needed to get the solution is recorded and printed on the console. 
+
+I implemented my CG solver by implementing two different classes: a class that writes the solution (WriteSoln), and a class that solves the matrix through the given CG Algorithm. WriteSoln merely writes the solution line by line through reading the values of x which are attained through the CGSolver class. 
+
+The goal is to solve $Ax = b$ for some sparse matrix $A$ (which represents the heat equation) using the CG algorithm.  In the CGSolver class, I first initialized variables to correspond to the pseudocode: vector r, vector Ax, and vector b. I then used the following functions, which are implemented in CGSolver but coded for in matvecops.cpp. I figured that these are the minimal number of functions I could use in order to make my code run most efficiently: 
+
+\begin{itemize}
+\item lnormer: returns the square root of the dot product of two vectors
+\item multiplyvec: returns the product of two vectors when multiplied. One vector is the sparse matrix read from the matrix file -- this means that it is processed through iterating the row pointers of the vector and appending to the product vector the value at that row pointer at the specified iteration multiplied by a value at the second vector (vector x) as defined by the first vector's column index-th (col idx) value in vector x. To clarify, the pseudocode of this formula would look like: Product Vector += ValueVector[iteration] * XVector[column index[iteration]].
+\item dotproduct: This takes in two vectors of equal length and iterates through the different nth elements of them, and multiplies these values through every iteration. A number is then returned. 
+\item multiplycoeff: Takes a coefficient and multiples it with every value in a matrix, resulting in a new vector.
+\item addvec: iterates through every value of a vector and adds the nth value of both vectors together, resulting in a new vector. 
+\item subtactvec: does the same ass addvec, but subtracts instead of adds. 
+\end{itemize}
+
+I implemented the following functions throughout the CGSolver algorithm when they were necessary. For instance, when the algorithm called to multiple two vectors (e.g. to get the product of A and p, I would call multiplyvec on vectors A and p). It should be noted that these functions don't return the result vector directly -- they take the result and modify it. This would be efficient for large matrices. To add to the efficiency, new variables such as the intialized $U_{n}$ aren't used after one iteration. Thus, these values are replaced after each iteration. 
+
+Two classes were used to use the OOP design concept of C++. The first was the sparse class, which contained the structure of a sparse matrix. This class performed many operations and held several data structures in order for the program to work with sparse matrices. These operations included setting the matrix dimension, multiplying sparse matrices by a vector, etc. Another class was the HeatEquation class that served to set up and solve the heat equation system. This classes uses the sparse class, sets up the sparse matrix system through the input of a file outlining the pipe's characteristics, and solves Ax=B through the CG algorithm. 
+\medskip
+
+The pseudocode of the CG algorithm is decribed below:
+\bigskip
+
+\textbf{\Large{CG Algorithm Pseudocode\\}}
+\begin{algorithm}[H]
+  \mathchardef\mhyphen="2D
+  \caption{Pseudocode of Conjugate Gradient (CG) Algorithm}
+  \SetAlgoLined
+  initialize $u_{0}$\;
+  $r_{0} = b - A u_{0}$\;
+  $2\mhyphen norm(r0) = 2\mhyphen norm(r_{0})$\;
+  $p_{0} = r_{0}$\;
+  $niter = 0$\;
+  \While{ $niter < max number of iterations$}{
+    $niter = niter +1$\;
+    $\alpha_{n} = (r_{n}^{T} r_{n})/ (p_{n}^{T} A p_{n})$\;
+    $u_{n+1} = u_{n} + \alpha_{n}p_{n}$\;
+    $r_{n+1} = r_{n} - \alpha_{n}A p_{n}$\;
+    $2\mhyphen norm(r) = 2\mhyphen norm(r_{n+1})$\;
+    \If{ $2\mhyphen norm(r) / 2\mhyphen norm(r0) < threshold$}{
+      break\;
+      }
+    $\beta_{n} = (r_{n+1}^{T} r_{n+1}) / (r_{n}^{T} r_{n})$\;
+    $p_{n+1} = r_{n+1} + \beta_{n} p_{n}$\;
+    }
+
+\end{algorithm}
+
+\bigskip
+\noindent
+\textbf{\Large{User's Guide}}
+
+\bigskip
+To run the program, follow the following steps:
+
+\begin{itemize}
+
+\item 1. After implementing the \texttt{makefile} , you can compile through the following usage on the command line:
+
+\smallskip
+\texttt{make\\}
+\texttt{./main [inputfile name] [solution\_prefix]}
+\bigskip
+
+The solution files are the solutions for every guess (for every 10 iterations). The names of the solution files are in the following pattern:
+\begin{center}
+\texttt{solution\_prefix * 1000 + number of iterations.txt\\}
+\end{center}
+Running the program will lead to the console printing the convergence information.
+
+A sample output of the C++ program is given below:
+\smallskip\\
+\texttt{\$ ./main input1.txt solution1\\
+The CG algorithm does not converge..}
+\smallskip
+
+\item 2. The postprocessing and graphing of the solution are written in Python file \texttt{postprocessing.py}. This file finds the mean temperature in the pipe and visualizes the temperature distribution through a pseudocolor plot. 
+
+\item The usage of the postprocessing procedure from the command line is:
+\smallskip
+\texttt{python postprocessing.py [input filename] [solution filename]}
+\smallskip
+
+A sample output should be something like (my file was unable to work):
+\bigskip\\
+\texttt{Input file processed: input1.txt\\Mean Temperature: 123.456\\}
+\end{itemize}
+
+\noindent
+\textbf{\Large{Example of Visualization of the Heat Distribution}}
+
+Unfortunatelly, I was unable to output a visualization of the heat distribution. But if it worked, it would be a square with an x axis from 0.0 to 1.0, and a y axis from around -0.2 to 0.8. There would be a scale on the side to show what colors correspond to what temperatures. The temperatures would be graphed, as color gradients, with a line overlaying the graph to represent the mean. 
+
+\newpage
+\noindent
+\textbf{\textit{\Large{Reference}}}
+\bigskip
+\\Nick Henderson, \textit{CME 211: Project Part 1}(2015)\\
+Nick Henderson, \textit{CME 211: Project Part 2}(2015)
+
+\end{document}

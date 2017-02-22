@@ -1,0 +1,5 @@
+AAG -1
+CGA 3
+TAC 7
+ATT 0 5
+TCG 2

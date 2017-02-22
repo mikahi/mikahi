@@ -1,0 +1,98 @@
+
+
+$ python generatedata.py 1000 600 50 reference1.txt reads1.txt
+reference length: 1000
+number reads: 600
+read length: 50
+aligns 0: 0.146666666667
+aligns 1: 0.768333333333
+aligns 2: 0.085
+
+$ python generatedata.py 10000 6000 50 reference2.txt reads2.txt
+reference length: 10000
+number reads: 6000
+read length: 50
+aligns 0: 0.150333333333
+aligns 1: 0.748
+aligns 2: 0.101666666667
+
+$ python generatedata.py 100000 60000 50 reference3.txt reads3.txt
+reference length: 100000
+number reads: 60000
+read length: 50
+aligns 0: 0.148533333333
+aligns 1: 0.752366666667
+aligns 2: 0.0991
+
+
+• Describe in a paragraph or so the considerations you used in designing your test data. If your code works properly for your test data, will it always work correctly for other datasets? 
+
+A big consideration i had was creating a function that would efficiently translate random numbers to “ATGC” characters. I 
+thought that creating a function would make the reference string generation a lot easier. Another major consideration was how 
+to properly split up the generation of reads with two right reads, one right read, and no proper reads. I figured that the 
+best way to do this would be if, elif, and else statements. I don’t think this code will work properly for all data sets, 
+especially really small ones that you cannot multiply by 0.75, 0.15, and 0.10 and get whole numbers. My code will also probably
+not work very well for datasets that are very long. 
+
+
+• Should you expect an exact 15% / 75% / 10% distribution for the reads that align zero, one, and two times? What other factors will affect the exact distribution of the reads? 
+
+No. Other factors that will affect the exact distribution are the (1) the magnitude of the reference string and (2) the 
+amount of reads. By the magnitude of the reference string, I mean how many characters are in the reference string. The 
+greater the amount of characters, the closer the distribution will be to 15/75/10. This is because each character is treated 
+as a whole integer, and these integers cannot be split into decimal values (you cannot have a fraction of a letter) . The 
+amount of characters with regards to it’s divisibility will also affect the distribution. If the number of characters is 
+divisible by 5 for instance (which is a common denominator of 15, 75, and 10), the distribution of reads will be more exact 
+than one that is not divisible by a common denominator. 
+
+
+• How much time did you spend writing the code for this part? Keeping track of the time you spend on coding is also a useful habit. Depending on your career path, in the future you may have to keep track
+
+It took me around 2.5 hours. 
+
+
+$ python processdata.py reference1.txt reads1.txt alignments1.txt
+reference length: 1000
+number reads: 600
+aligns 0: 0.146666666667
+aligns 1: 0.763333333333
+aligns 2: 0.09
+elapsed time: 0.00562691688538
+
+$ python processdata.py reference2.txt reads2.txt alignments2.txt
+
+reference length: 10000
+number reads: 6000
+aligns 0: 0.150333333333
+aligns 1: 0.748
+aligns 2: 0.101666666667
+elapsed time: 0.34249997139
+
+$ python processdata.py reference3.txt reads3.txt alignments3.txt
+reference length: 100000
+number reads: 60000
+aligns 0: 0.148533333333
+aligns 1: 0.752333333333
+aligns 2: 0.0991333333333
+elapsed time: 24
+
+
+•  Does the distribution of reads that align zero, one, and two or more times exactly match the distributions you computed as you were creating the datasets? Why or why not?
+
+It does not. This is because when I generated the reference string by copying the last portion of the 75% string and pasting 
+it to the end, there is a small chance that some of the reads that were copied are present earlier in the string, although 
+they were not indented to be. This means the reads I intended to be present twice can be present thrice, and reads I intended 
+to be present once can be present twice. Thus, when I run the processdata.py file, the count of the number of alignments can 
+be a little off. 
+
+• Using your timing results what can you say about the scalability of your implementation as the size of the reference varies? Estimate the time to align the data for a human at 30x coverage and a read length of 50. Is it feasible to actually do this using your program? #what is 30x coverage?
+As the size of the reference varies, the processdata.py file takes longer to run. For the various data sets I 
+used (all with a coverage of 30, I found that as the size of the reference string increases by x10 (e.g. from 600 to 
+6000 or 1000 to 10000),  the time is multiplied by around 80-100. This suggests that it isn’t possible to estimate 
+the time to align the data for a human at 30x coverage with a read length of 50, as the amount of time will vary depending 
+on the size of the read and reference strings. Very long strings take a lot of processing time, and this is likely what will 
+happen with a human at 30x coverage. This is because my program reads a reference string line by line.
+
+• How much time did you spend writing the code for this part?
+
+It took me around 3 hours. 
